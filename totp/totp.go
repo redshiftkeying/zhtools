@@ -56,6 +56,9 @@ func calculateT(unixTime, t0, timeStep uint64) uint64 {
 // It takes a base32-encoded key string and a uint64 message as input.
 // It returns the computed HMAC as a byte slice or an error if key decoding fails.
 func computeHmacSha1(key string, msg uint64) ([]byte, error) {
+	if key == "" {
+		return nil, fmt.Errorf("the key cannot be empty")
+	}
 	upperedLetterKey := strings.ToUpper(key)
 	keyByte, err := base32.StdEncoding.WithPadding(base32.NoPadding).DecodeString(upperedLetterKey)
 	if err != nil {
